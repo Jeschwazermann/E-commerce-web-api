@@ -3,7 +3,10 @@ require("dotenv").config();
 const morgan = require("morgan");
 
 const mongoConnect = require("./services/mongo");
-const productRoute = require("./Routes/product.routes");
+const categoriesRoutes = require("./Routes/category.routes");
+const productsRoutes = require("./Routes/product.routes");
+const usersRoutes = require("./Routes/user.routes");
+const ordersRoutes = require("./Routes/order.routes");
 
 const app = express();
 
@@ -12,11 +15,14 @@ const api = process.env.API_URL;
 
 //middleware
 app.use(express.json());
-app.use(morgan("combined"));
+app.use(morgan("tiny"));
 
-app.use(`${api}/products`, productRoute);
+app.use(`${api}/categories`, categoriesRoutes);
+app.use(`${api}/products`, productsRoutes);
+app.use(`${api}/users`, usersRoutes);
+app.use(`${api}/orders`, ordersRoutes);
 
-const startServer = async (params) => {
+const startServer = async () => {
   try {
     await mongoConnect();
 
